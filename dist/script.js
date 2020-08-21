@@ -230,13 +230,18 @@
 
 	function createPinball() {
 		// x/y are set to when pinball is launched
-		pinball = Matter.Bodies.circle(0, 0, 14, {
+		pinball = Matter.Bodies.circle(0, 0, 20, {
 			label: 'pinball',
 			collisionFilter: {
 				group: stopperGroup
 			},
 			render: {
-				fillStyle: COLOR.PINBALL
+				fillStyle: COLOR.PINBALL,
+				sprite: {
+					xScale:0.5,
+					yScale: 0.5,
+					texture: '../dt2_pinball.png'}
+
 			}
 		});
 		Matter.World.add(world, pinball);
