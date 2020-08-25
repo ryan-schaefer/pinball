@@ -10,6 +10,7 @@
 		APRON_LEFT: '0 0 180 120 0 120 0 0',
 		APRON_RIGHT: '180 0 180 120 0 120 180 0'
 	};
+
 	const COLOR = {
 		BACKGROUND: '#212529',
 		OUTER: '#495057',
@@ -51,7 +52,7 @@
 		world = engine.world;
 		world.bounds = {
 			min: { x: 0, y: 0},
-			max: { x: 500, y: 800 }
+			max: { x: 800, y: 1100 }
 		};
 		world.gravity.y = GRAVITY; // simulate rolling on a slanted table
 
@@ -85,18 +86,19 @@
 	function createStaticBodies() {
 		Matter.World.add(world, [
 			// table boundaries (top, bottom, left, right)
-			boundary(250, -30, 500, 100),
-			boundary(250, 830, 500, 100),
-			boundary(-30, 400, 100, 800),
-			boundary(530, 400, 100, 800),
+			boundary(250, -100, 500, 100),
+			boundary(250, 1050, 1100, 100),
+			boundary(5, 500, 100, 1100),
+			boundary(790, 500, 100, 1100),
 
 			// dome
-			path(239, 86, PATHS.DOME),
+			path(380, 120, PATHS.DOME.split(' ').map(val => {
+				return (parseFloat(val) * 1.5).toString();}).join(' ')),
 
 			// pegs (left, mid, right)
-			wall(140, 140, 20, 40, COLOR.INNER),
-			wall(225, 140, 20, 40, COLOR.INNER),
-			wall(310, 140, 20, 40, COLOR.INNER),
+			wall(250, 215, 40, 80, COLOR.INNER),
+			wall(400, 215, 40, 80, COLOR.INNER),
+			wall(550, 215, 40, 80, COLOR.INNER),
 
 			// top bumpers (left, mid, right)
 			bumper(105, 250),
@@ -108,11 +110,13 @@
 			bumper(285, 340),
 
 			// shooter lane wall
-			wall(440, 520, 20, 560, COLOR.OUTER),
+			wall(675, 750, 30, 800, COLOR.OUTER),
 
 			// drops (left, right)
-			path(25, 360, PATHS.DROP_LEFT),
-			path(425, 360, PATHS.DROP_RIGHT),
+			path(60, 470, PATHS.DROP_LEFT.split(' ').map(val => {
+				return (parseFloat(val) * 1.5).toString();}).join(' ')),
+			path(650, 470, PATHS.DROP_RIGHT.split(' ').map(val => {
+				return (parseFloat(val) * 1.5).toString();}).join(' ')),
 
 			// slingshots (left, right)
 			wall(120, 510, 20, 120, COLOR.INNER),
@@ -127,12 +131,14 @@
 			wall(357, 624, 20, 98, COLOR.INNER, 0.96),
 
 			// aprons (left, right)
-			path(79, 740, PATHS.APRON_LEFT),
-			path(371, 740, PATHS.APRON_RIGHT),
+			path(145, 940, PATHS.APRON_LEFT.split(' ').map(val => {
+				return (parseFloat(val) * 1.5).toString();}).join(' ')),
+			path(571, 940, PATHS.APRON_RIGHT.split(' ').map(val => {
+				return (parseFloat(val) * 1.5).toString();}).join(' ')),
 
 			// reset zones (center, right)
 			reset(225, 50),
-			reset(465, 30)
+			reset(715, 50)
 		]);
 	}
 
@@ -238,8 +244,8 @@
 			render: {
 				fillStyle: COLOR.PINBALL,
 				sprite: {
-					xScale:0.5,
-					yScale: 0.5,
+					xScale:0.4,
+					yScale: 0.4,
 					texture: '../dt2_pinball.png'}
 
 			}
@@ -275,7 +281,7 @@
 			});
 
 			// cheap way to keep ball from going back down the shooter lane
-			if (pinball.position.x > 450 && pinball.velocity.y > 0) {
+			if (pinball.position.x > 700 && pinball.velocity.y > 0) {
 				Matter.Body.setVelocity(pinball, { x: 0, y: -10 });
 			}
 		});
@@ -326,7 +332,7 @@
 
 	function launchPinball() {
 		updateScore(0);
-		Matter.Body.setPosition(pinball, { x: 465, y: 765 });
+		Matter.Body.setPosition(pinball, { x: 600, y: 765 });
 		Matter.Body.setVelocity(pinball, { x: 0, y: -25 + rand(-2, 2) });
 		Matter.Body.setAngularVelocity(pinball, 0);
 	}
