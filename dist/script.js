@@ -96,18 +96,18 @@
 				return (parseFloat(val) * 1.5).toString();}).join(' ')),
 
 			// pegs (left, mid, right)
-			wall(250, 215, 40, 80, COLOR.INNER),
-			wall(400, 215, 40, 80, COLOR.INNER),
-			wall(550, 215, 40, 80, COLOR.INNER),
+			wall(250, 200, 30, 80, COLOR.INNER),
+			wall(375, 200, 30, 80, COLOR.INNER),
+			wall(500, 200, 30, 80, COLOR.INNER),
 
 			// top bumpers (left, mid, right)
-			bumper(105, 250),
-			bumper(225, 250),
-			bumper(345, 250),
+			bumper(255, 280),
+			bumper(375, 280),
+			bumper(495, 280),
 
 			// bottom bumpers (left, right)
-			bumper(165, 340),
-			bumper(285, 340),
+			bumper(315, 380),
+			bumper(435, 380),
 
 			// shooter lane wall
 			wall(675, 750, 30, 800, COLOR.OUTER),
@@ -119,16 +119,16 @@
 				return (parseFloat(val) * 1.5).toString();}).join(' ')),
 
 			// slingshots (left, right)
-			wall(120, 510, 20, 120, COLOR.INNER),
-			wall(330, 510, 20, 120, COLOR.INNER),
+			wall(200, 675, 20, 150, COLOR.INNER),
+			wall(520, 675, 20, 150, COLOR.INNER),
 
 			// out lane walls (left, right)
-			wall(60, 529, 20, 160, COLOR.INNER),
-			wall(390, 529, 20, 160, COLOR.INNER),
+			wall(120, 690, 20, 175, COLOR.INNER),
+			wall(600, 690, 20, 175, COLOR.INNER),
 
 			// flipper walls (left, right);
-			wall(93, 624, 20, 98, COLOR.INNER, -0.96),
-			wall(357, 624, 20, 98, COLOR.INNER, 0.96),
+			wall(180, 810, 20, 150, COLOR.INNER, -0.96),
+			wall(545, 810, 20, 150, COLOR.INNER, 0.96),
 
 			// aprons (left, right)
 			path(145, 940, PATHS.APRON_LEFT.split(' ').map(val => {
@@ -137,7 +137,7 @@
 				return (parseFloat(val) * 1.5).toString();}).join(' ')),
 
 			// reset zones (center, right)
-			reset(225, 50),
+			reset(360, 75),
 			reset(715, 50)
 		]);
 	}
@@ -174,7 +174,7 @@
 			label: 'paddleLeftComp',
 			parts: [paddleLeft.paddle, paddleLeft.brick]
 		});
-		paddleLeft.hinge = Matter.Bodies.circle(142, 660, 5, {
+		paddleLeft.hinge = Matter.Bodies.circle(230, 845, 20, {
 			isStatic: true,
 			render: {
 				visible: false
@@ -214,7 +214,7 @@
 			label: 'paddleRightComp',
 			parts: [paddleRight.paddle, paddleRight.brick]
 		});
-		paddleRight.hinge = Matter.Bodies.circle(308, 660, 5, {
+		paddleRight.hinge = Matter.Bodies.circle(490, 845, 20, {
 			isStatic: true,
 			render: {
 				visible: false
@@ -332,7 +332,7 @@
 
 	function launchPinball() {
 		updateScore(0);
-		Matter.Body.setPosition(pinball, { x: 600, y: 765 });
+		Matter.Body.setPosition(pinball, { x: 725, y: 765 });
 		Matter.Body.setVelocity(pinball, { x: 0, y: -25 + rand(-2, 2) });
 		Matter.Body.setAngularVelocity(pinball, 0);
 	}
@@ -449,7 +449,7 @@
 
 	// contact with these bodies causes pinball to be relaunched
 	function reset(x, width) {
-		return Matter.Bodies.rectangle(x, 781, width, 2, {
+		return Matter.Bodies.rectangle(x, 1000, width, 2, {
 			label: 'reset',
 			isStatic: true,
 			render: {
