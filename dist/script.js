@@ -110,7 +110,7 @@
 			bumper(435, 380),
 
 			// shooter lane wall
-			wall(675, 750, 30, 800, COLOR.OUTER),
+			wall(675, 750, 30, 850, COLOR.OUTER),
 
 			// drops (left, right)
 			path(60, 470, PATHS.DROP_LEFT.split(' ').map(val => {
@@ -144,10 +144,10 @@
 
 	function createPaddles() {
 		// these bodies keep paddle swings contained, but allow the ball to pass through
-		leftUpStopper = stopper(160, 591, 'left', 'up');
-		leftDownStopper = stopper(140, 743, 'left', 'down');
-		rightUpStopper = stopper(290, 591, 'right', 'up');
-		rightDownStopper = stopper(310, 743, 'right', 'down');
+		leftUpStopper = stopper(550, 600, 'left', 'up');
+		leftDownStopper = stopper(500, 1000, 'left', 'down');
+		rightUpStopper = stopper(300, 600, 'right', 'up');
+		rightDownStopper = stopper(250, 1000, 'right', 'down');
 		Matter.World.add(world, [leftUpStopper, leftDownStopper, rightUpStopper, rightDownStopper]);
 
 		// this group lets paddle pieces overlap each other
@@ -155,7 +155,7 @@
 
 		// Left paddle mechanism
 		let paddleLeft = {};
-		paddleLeft.paddle = Matter.Bodies.trapezoid(170, 660, 20, 80, 0.33, {
+		paddleLeft.paddle = Matter.Bodies.trapezoid(280, 660, 20, 110, 0.33, {
 			label: 'paddleLeft',
 			angle: 1.57,
 			chamfer: {},
@@ -163,8 +163,8 @@
 				fillStyle: COLOR.PADDLE
 			}
 		});
-		paddleLeft.brick = Matter.Bodies.rectangle(172, 672, 40, 80, {
-			angle: 1.62,
+		paddleLeft.brick = Matter.Bodies.rectangle(280, 672, 40, 80, {
+			angle: 1.87,
 			chamfer: {},
 			render: {
 				visible: false
@@ -174,7 +174,7 @@
 			label: 'paddleLeftComp',
 			parts: [paddleLeft.paddle, paddleLeft.brick]
 		});
-		paddleLeft.hinge = Matter.Bodies.circle(230, 845, 20, {
+		paddleLeft.hinge = Matter.Bodies.circle(238, 850, 20, {
 			isStatic: true,
 			render: {
 				visible: false
@@ -185,7 +185,7 @@
 		});
 		paddleLeft.con = Matter.Constraint.create({
 			bodyA: paddleLeft.comp,
-			pointA: { x: -29.5, y: -8.5 },
+			pointA: { x: -39.5, y: -8.5 },
 			bodyB: paddleLeft.hinge,
 			length: 0,
 			stiffness: 0
@@ -195,7 +195,7 @@
 
 		// right paddle mechanism
 		let paddleRight = {};
-		paddleRight.paddle = Matter.Bodies.trapezoid(280, 660, 20, 80, 0.33, {
+		paddleRight.paddle = Matter.Bodies.trapezoid(280, 660, 20, 110, 0.33, {
 			label: 'paddleRight',
 			angle: -1.57,
 			chamfer: {},
@@ -214,7 +214,7 @@
 			label: 'paddleRightComp',
 			parts: [paddleRight.paddle, paddleRight.brick]
 		});
-		paddleRight.hinge = Matter.Bodies.circle(490, 845, 20, {
+		paddleRight.hinge = Matter.Bodies.circle(485, 850, 20, {
 			isStatic: true,
 			render: {
 				visible: false
@@ -225,7 +225,7 @@
 		});
 		paddleRight.con = Matter.Constraint.create({
 			bodyA: paddleRight.comp,
-			pointA: { x: 29.5, y: -8.5 },
+			pointA: { x: 39.5, y: -8.5 },
 			bodyB: paddleRight.hinge,
 			length: 0,
 			stiffness: 0
