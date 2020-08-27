@@ -164,7 +164,7 @@
 			}
 		});
 		paddleLeft.brick = Matter.Bodies.rectangle(280, 672, 40, 80, {
-			angle: 1.87,
+			angle: 1.88,
 			chamfer: {},
 			render: {
 				visible: false
