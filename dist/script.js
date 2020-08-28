@@ -85,11 +85,17 @@
 
 	function createStaticBodies() {
 		Matter.World.add(world, [
-			// drops (left, right)
+
+			// side bumpers (left, right)
 			sideBumper(60, 470, PATHS.DROP_LEFT.split(' ').map(val => {
-				return (parseFloat(val) * 1.5).toString();}).join(' ')),
-			sideBumper(650, 470, PATHS.DROP_RIGHT.split(' ').map(val => {
-				return (parseFloat(val) * 1.5).toString();}).join(' ')),
+				return (parseFloat(val) * 1.15).toString();}).join(' ')),
+			sideBumper(657, 470, PATHS.DROP_RIGHT.split(' ').map(val => {
+				return (parseFloat(val) * 1.15).toString();}).join(' ')),
+
+			path(60, 473, PATHS.DROP_LEFT.split(' ').map(val => {
+				return (parseFloat(val) * 1.1).toString();}).join(' ')),
+			path(657, 473, PATHS.DROP_RIGHT.split(' ').map(val => {
+				return (parseFloat(val) * 1.1).toString();}).join(' ')),
 
 			// dome
 			path(380, 120, PATHS.DOME.split(' ').map(val => {
@@ -117,11 +123,8 @@
 			bumper(315, 380),
 			bumper(435, 380),
 
-
-
-
 			// shooter lane wall
-			wall(675, 750, 30, 850, COLOR.OUTER),
+			wall(675, 750, 22, 850, COLOR.OUTER),
 
 			// slingshots (left, right)
 			wall(200, 675, 20, 150, COLOR.INNER),
@@ -135,15 +138,21 @@
 			wall(180, 810, 20, 150, COLOR.INNER, -0.96),
 			wall(545, 810, 20, 150, COLOR.INNER, 0.96),
 
-			// aprons (left, right)
-			path(145, 940, PATHS.APRON_LEFT.split(' ').map(val => {
-				return (parseFloat(val) * 1.5).toString();}).join(' ')),
-			path(571, 940, PATHS.APRON_RIGHT.split(' ').map(val => {
-				return (parseFloat(val) * 1.5).toString();}).join(' ')),
-
 			// reset zones (center, right)
-			reset(360, 75),
-			reset(715, 50)
+			reset(358, 600),
+			reset(712.5, 55),
+
+			resetTop(400, 1000),
+			resetLeft(25, 1120),
+			resetRight(775, 1120),
+			resetLeftCorner(100, 400),
+			resetRightCorner(700, 400),
+
+			// aprons (left, right)
+			path(145, 950, PATHS.APRON_LEFT.split(' ').map(val => {
+				return (parseFloat(val) * 1.5).toString();}).join(' ')),
+			path(577, 950, PATHS.APRON_RIGHT.split(' ').map(val => {
+				return (parseFloat(val) * 1.5).toString();}).join(' '))
 		]);
 	}
 
@@ -251,8 +260,8 @@
 				sprite: {
 					xScale:0.4,
 					yScale: 0.4,
-					texture: '../dt2_pinball.png'}
-
+					texture: '../dt2_pinball.png'
+					}
 			}
 		});
 		Matter.World.add(world, pinball);
@@ -268,6 +277,21 @@
 					switch (pair.bodyA.label) {
 						case 'reset':
 							launchPinball();
+							break;
+						case 'resetTop':
+							launchPinballKeepScore();
+							break;
+						case 'resetLeft':
+							launchPinballKeepScore();
+							break;
+						case 'resetRight':
+							launchPinballKeepScore();
+							break;
+						case 'resetRightCorner':
+							launchPinballKeepScore();
+							break;
+						case 'resetLeftCorner':
+							launchPinballKeepScore();
 							break;
 						case 'bumper':
 							pingBumper(pair.bodyA);
@@ -340,8 +364,14 @@
 
 	function launchPinball() {
 		updateScore(0);
-		Matter.Body.setPosition(pinball, { x: 725, y: 765 });
-		Matter.Body.setVelocity(pinball, { x: 0, y: -25 + rand(-2, 2) });
+		Matter.Body.setPosition(pinball, { x: 725, y: 950 });
+		Matter.Body.setVelocity(pinball, { x: 0, y: -50 + rand(-5, 5) });
+		Matter.Body.setAngularVelocity(pinball, 0);
+	}
+
+	function launchPinballKeepScore() {
+		Matter.Body.setPosition(pinball, { x: 725, y: 950 });
+		Matter.Body.setVelocity(pinball, { x: 0, y: -50 + rand(-5, 5) });
 		Matter.Body.setAngularVelocity(pinball, 0);
 	}
 
@@ -488,6 +518,65 @@
 			label: 'reset',
 			isStatic: true,
 			render: {
+				fillStyle: '#fff'
+			}
+		});
+	}
+
+	function resetTop(x, width) {
+		return Matter.Bodies.rectangle(x, 5, width, 20, {
+			label: 'resetTop',
+			isStatic: true,
+			render: {
+				visible: false,
+				fillStyle: '#fff'
+			}
+		});
+	}
+
+	function resetLeft(x, width) {
+		return Matter.Bodies.rectangle(x, 550, width, 20, {
+			label: 'resetLeft',
+			isStatic: true,
+			angle: 1.555,
+			render: {
+				visible: false,
+				fillStyle: '#fff'
+			}
+		});
+	}
+
+	function resetRight(x, width) {
+		return Matter.Bodies.rectangle(x, 550, width, 20, {
+			label: 'resetRight',
+			isStatic: true,
+			angle: 1.555,
+			render: {
+				visible: false,
+				fillStyle: '#fff'
+			}
+		});
+	}
+
+	function resetLeftCorner(x, width) {
+		return Matter.Bodies.rectangle(x, 150, width, 20, {
+			label: 'resetLeftCorner',
+			isStatic: true,
+			angle: 14.8,
+			render: {
+				visible: false,
+				fillStyle: '#fff'
+			}
+		});
+	}
+
+	function resetRightCorner(x, width) {
+		return Matter.Bodies.rectangle(x, 150, width,20, {
+			label: 'resetRightCorner',
+			isStatic: true,
+			angle: -14.8,
+			render: {
+				visible: false,
 				fillStyle: '#fff'
 			}
 		});
