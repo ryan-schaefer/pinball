@@ -85,11 +85,12 @@
 
 	function createStaticBodies() {
 		Matter.World.add(world, [
-			// drops (left, right)
+
+			// side bumpers (left, right)
 			sideBumper(60, 470, PATHS.DROP_LEFT.split(' ').map(val => {
-				return (parseFloat(val) * 1.5).toString();}).join(' ')),
-			sideBumper(650, 470, PATHS.DROP_RIGHT.split(' ').map(val => {
-				return (parseFloat(val) * 1.5).toString();}).join(' ')),
+				return (parseFloat(val) * 1.1).toString();}).join(' ')),
+			sideBumper(657, 470, PATHS.DROP_RIGHT.split(' ').map(val => {
+				return (parseFloat(val) * 1.1).toString();}).join(' ')),
 
 			// dome
 			path(380, 120, PATHS.DOME.split(' ').map(val => {
@@ -121,7 +122,7 @@
 
 
 			// shooter lane wall
-			wall(675, 750, 30, 850, COLOR.OUTER),
+			wall(675, 750, 20, 850, COLOR.OUTER),
 
 			// slingshots (left, right)
 			wall(200, 675, 20, 150, COLOR.INNER),
@@ -135,15 +136,21 @@
 			wall(180, 810, 20, 150, COLOR.INNER, -0.96),
 			wall(545, 810, 20, 150, COLOR.INNER, 0.96),
 
-			// aprons (left, right)
-			path(145, 940, PATHS.APRON_LEFT.split(' ').map(val => {
-				return (parseFloat(val) * 1.5).toString();}).join(' ')),
-			path(571, 940, PATHS.APRON_RIGHT.split(' ').map(val => {
-				return (parseFloat(val) * 1.5).toString();}).join(' ')),
-
 			// reset zones (center, right)
-			reset(360, 75),
-			reset(715, 50)
+			reset(358, 600),
+			reset(712.5, 55),
+
+			resetTop(400, 1000),
+			resetLeft(25, 1120),
+			resetRight(775, 1120),
+			resetLeftCorner(100, 400),
+			resetRightCorner(700, 400),
+
+			// aprons (left, right)
+			path(145, 950, PATHS.APRON_LEFT.split(' ').map(val => {
+				return (parseFloat(val) * 1.5).toString();}).join(' ')),
+			path(577, 950, PATHS.APRON_RIGHT.split(' ').map(val => {
+				return (parseFloat(val) * 1.5).toString();}).join(' '))
 		]);
 	}
 
@@ -251,8 +258,8 @@
 				sprite: {
 					xScale:0.4,
 					yScale: 0.4,
-					texture: '../dt2_pinball.png'}
-
+					texture: '../dt2_pinball.png'
+					}
 			}
 		});
 		Matter.World.add(world, pinball);
@@ -267,6 +274,15 @@
 				if (pair.bodyB.label === 'pinball') {
 					switch (pair.bodyA.label) {
 						case 'reset':
+							launchPinball();
+							break;
+						case 'resetTop':
+							launchPinball();
+							break;
+						case 'resetLeft':
+							launchPinball();
+							break;
+						case 'resetRight':
 							launchPinball();
 							break;
 						case 'bumper':
@@ -488,6 +504,65 @@
 			label: 'reset',
 			isStatic: true,
 			render: {
+				fillStyle: '#fff'
+			}
+		});
+	}
+
+	function resetTop(x, width) {
+		return Matter.Bodies.rectangle(x, 0, width, 2, {
+			label: 'resetTop',
+			isStatic: true,
+			render: {
+				visible: false,
+				fillStyle: '#fff'
+			}
+		});
+	}
+
+	function resetLeft(x, width) {
+		return Matter.Bodies.rectangle(x, 550, width, 2, {
+			label: 'resetTop',
+			isStatic: true,
+			angle: 1.555,
+			render: {
+				visible: false,
+				fillStyle: '#fff'
+			}
+		});
+	}
+
+	function resetRight(x, width) {
+		return Matter.Bodies.rectangle(x, 550, width, 2, {
+			label: 'resetTop',
+			isStatic: true,
+			angle: 1.555,
+			render: {
+				visible: false,
+				fillStyle: '#fff'
+			}
+		});
+	}
+
+	function resetLeftCorner(x, width) {
+		return Matter.Bodies.rectangle(x, 150, width, 2, {
+			label: 'resetTop',
+			isStatic: true,
+			angle: 14.8,
+			render: {
+				visible: false,
+				fillStyle: '#fff'
+			}
+		});
+	}
+
+	function resetRightCorner(x, width) {
+		return Matter.Bodies.rectangle(x, 150, width, 2, {
+			label: 'resetTop',
+			isStatic: true,
+			angle: -14.8,
+			render: {
+				visible: false,
 				fillStyle: '#fff'
 			}
 		});
