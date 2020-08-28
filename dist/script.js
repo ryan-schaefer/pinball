@@ -261,7 +261,7 @@
 					xScale:0.4,
 					yScale: 0.4,
 					texture: '../dt2_pinball.png'
-					}
+				}
 			}
 		});
 		Matter.World.add(world, pinball);
@@ -354,7 +354,7 @@
 				isLeftPaddleUp = false;
 			});
 		$('.right-trigger')
-		.on('mousedown touchstart', function(e) {
+			.on('mousedown touchstart', function(e) {
 				isRightPaddleUp = true;
 			})
 			.on('mouseup touchend', function(e) {
