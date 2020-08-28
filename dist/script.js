@@ -85,20 +85,28 @@
 
 	function createStaticBodies() {
 		Matter.World.add(world, [
+			// drops (left, right)
+			sideBumper(60, 470, PATHS.DROP_LEFT.split(' ').map(val => {
+				return (parseFloat(val) * 1.5).toString();}).join(' ')),
+			sideBumper(650, 470, PATHS.DROP_RIGHT.split(' ').map(val => {
+				return (parseFloat(val) * 1.5).toString();}).join(' ')),
+
+			// dome
+			path(380, 120, PATHS.DOME.split(' ').map(val => {
+				return (parseFloat(val) * 1.5).toString();}).join(' ')),
+
 			// table boundaries (top, bottom, left, right)
 			boundary(250, -100, 500, 100),
 			boundary(250, 1050, 1100, 100),
 			boundary(5, 500, 100, 1100),
 			boundary(790, 500, 100, 1100),
 
-			// dome
-			path(380, 120, PATHS.DOME.split(' ').map(val => {
-				return (parseFloat(val) * 1.5).toString();}).join(' ')),
+
 
 			// pegs (left, mid, right)
-			wall(250, 200, 30, 80, COLOR.INNER),
-			wall(375, 200, 30, 80, COLOR.INNER),
-			wall(500, 200, 30, 80, COLOR.INNER),
+			wall(250, 170, 18, 80, COLOR.INNER),
+			wall(375, 170, 18, 80, COLOR.INNER),
+			wall(500, 170, 18, 80, COLOR.INNER),
 
 			// top bumpers (left, mid, right)
 			bumper(255, 280),
@@ -109,14 +117,11 @@
 			bumper(315, 380),
 			bumper(435, 380),
 
+
+
+
 			// shooter lane wall
 			wall(675, 750, 30, 850, COLOR.OUTER),
-
-			// drops (left, right)
-			path(60, 470, PATHS.DROP_LEFT.split(' ').map(val => {
-				return (parseFloat(val) * 1.5).toString();}).join(' ')),
-			path(650, 470, PATHS.DROP_RIGHT.split(' ').map(val => {
-				return (parseFloat(val) * 1.5).toString();}).join(' ')),
 
 			// slingshots (left, right)
 			wall(200, 675, 20, 150, COLOR.INNER),
@@ -146,8 +151,8 @@
 		// these bodies keep paddle swings contained, but allow the ball to pass through
 		leftUpStopper = stopper(550, 600, 'left', 'up');
 		leftDownStopper = stopper(500, 1000, 'left', 'down');
-		rightUpStopper = stopper(300, 600, 'right', 'up');
-		rightDownStopper = stopper(250, 1000, 'right', 'down');
+		rightUpStopper = stopper(200, 600, 'right', 'up');
+		rightDownStopper = stopper(150, 1050, 'right', 'down');
 		Matter.World.add(world, [leftUpStopper, leftDownStopper, rightUpStopper, rightDownStopper]);
 
 		// this group lets paddle pieces overlap each other
@@ -163,8 +168,8 @@
 				fillStyle: COLOR.PADDLE
 			}
 		});
-		paddleLeft.brick = Matter.Bodies.rectangle(280, 672, 40, 80, {
-			angle: 1.88,
+		paddleLeft.brick = Matter.Bodies.rectangle(280, 672, 60, 100, {
+			angle: 1.57,
 			chamfer: {},
 			render: {
 				visible: false
@@ -174,7 +179,7 @@
 			label: 'paddleLeftComp',
 			parts: [paddleLeft.paddle, paddleLeft.brick]
 		});
-		paddleLeft.hinge = Matter.Bodies.circle(238, 850, 20, {
+		paddleLeft.hinge = Matter.Bodies.circle(238, 850, 5, {
 			isStatic: true,
 			render: {
 				visible: false
@@ -203,8 +208,8 @@
 				fillStyle: COLOR.PADDLE
 			}
 		});
-		paddleRight.brick = Matter.Bodies.rectangle(278, 672, 40, 80, {
-			angle: -1.62,
+		paddleRight.brick = Matter.Bodies.rectangle(278, 672, 60, 100, {
+			angle: -1.57,
 			chamfer: {},
 			render: {
 				visible: false
@@ -214,7 +219,7 @@
 			label: 'paddleRightComp',
 			parts: [paddleRight.paddle, paddleRight.brick]
 		});
-		paddleRight.hinge = Matter.Bodies.circle(485, 850, 20, {
+		paddleRight.hinge = Matter.Bodies.circle(485, 850, 5, {
 			isStatic: true,
 			render: {
 				visible: false
@@ -266,6 +271,9 @@
 							break;
 						case 'bumper':
 							pingBumper(pair.bodyA);
+							break;
+						case 'sideBumper':
+							pingSideBumper(pair.bodyA);
 							break;
 					}
 				}
@@ -347,6 +355,16 @@
 		}, 100);
 	}
 
+	function pingSideBumper(sideBumper) {
+		updateScore(currentScore + 5);
+
+		// flash color
+		sideBumper.render.fillStyle = COLOR.BUMPER_LIT;
+		setTimeout(function() {
+			sideBumper.render.fillStyle = COLOR.BUMPER;
+		}, 100);
+	}
+
 	function updateScore(newCurrentScore) {
 		currentScore = newCurrentScore;
 		$currentScore.text(currentScore);
@@ -398,7 +416,7 @@
 	}
 
 	// round bodies that repel pinball
-	function bumper(x, y) {
+	function bumper(x, y,) {
 		let bumper = Matter.Bodies.circle(x, y, 25, {
 			label: 'bumper',
 			isStatic: true,
@@ -407,10 +425,27 @@
 			}
 		});
 
+
+
 		// for some reason, restitution is reset unless it's set after body creation
 		bumper.restitution = BUMPER_BOUNCE;
 
 		return bumper;
+	}
+
+	function sideBumper(x, y, path) {
+		let bumperVertices = Matter.Vertices.fromPath(path);
+		let bumper2 = Matter.Bodies.fromVertices(x, y, bumperVertices, {
+			label: 'sideBumper',
+			isStatic: true,
+			render: {
+				fillStyle: COLOR.BUMPER
+			}
+		});
+
+		bumper2.restitution = BUMPER_BOUNCE;
+
+		return bumper2;
 	}
 
 	// invisible bodies to constrict paddles
