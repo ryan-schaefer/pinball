@@ -12,12 +12,12 @@
 	};
 
 	const COLOR = {
-		BACKGROUND: '#212529',
-		OUTER: '#495057',
-		INNER: '#15aabf',
+		BACKGROUND: '#F23B25',
+		OUTER: '#4657DA',
+		INNER: '#dee2e6',
 		BUMPER: '#fab005',
 		BUMPER_LIT: '#fff3bf',
-		PADDLE: '#e64980',
+		PADDLE: '#bcbcbc',
 		PINBALL: '#dee2e6'
 	};
 	const GRAVITY = 0.75;
@@ -361,7 +361,7 @@
 				isRightPaddleUp = false;
 			});
 	}
-
+	
 	function launchPinball() {
 		updateScore(0);
 		Matter.Body.setPosition(pinball, { x: 725, y: 950 });
