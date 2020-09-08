@@ -8,13 +8,13 @@
 		DROP_LEFT: '0 0 20 0 70 100 20 150 0 150 0 0',
 		DROP_RIGHT: '50 0 68 0 68 150 50 150 0 100 50 0',
 		APRON_LEFT: '0 0 180 120 0 120 0 0',
-		APRON_RIGHT: '180 0 180 120 0 120 180 0'
+		APRON_RIGHT: '180 0 180 120 0 120 180 0',
 	};
 
 	const COLOR = {
-		BACKGROUND: '#F23B25',
-		OUTER: '#4657DA',
-		INNER: '#dee2e6',
+		BACKGROUND: '../Baby_Trump_BG.png',
+		OUTER: '#963524',
+		INNER: '#525ad1',
 		BUMPER: '#fab005',
 		BUMPER_LIT: '#fff3bf',
 		PADDLE: '#bcbcbc',
@@ -65,7 +65,7 @@
 				height: world.bounds.max.y,
 				wireframes: WIREFRAMES,
 				background: COLOR.BACKGROUND
-			}
+			},
 		});
 		Matter.Render.run(render);
 
@@ -115,13 +115,13 @@
 			wall(500, 170, 18, 80, COLOR.INNER),
 
 			// top bumpers (left, mid, right)
-			bumper(255, 280),
-			bumper(375, 280),
-			bumper(495, 280),
+			bumper1(255, 280),
+			bumper2(375, 280),
+			bumper3(495, 280),
 
 			// bottom bumpers (left, right)
-			bumper(315, 380),
-			bumper(435, 380),
+			bumper4(315, 380),
+			bumper5(435, 380),
 
 			// shooter lane wall
 			wall(675, 750, 22, 850, COLOR.OUTER),
@@ -142,6 +142,7 @@
 			reset(358, 600),
 			reset(712.5, 55),
 
+			//reset zones (out of bounds)
 			resetTop(400, 1000),
 			resetLeft(25, 1120),
 			resetRight(775, 1120),
@@ -451,11 +452,10 @@
 			label: 'bumper',
 			isStatic: true,
 			render: {
-				fillStyle: COLOR.BUMPER
+				fillStyle: COLOR.BUMPER,
+
 			}
 		});
-
-
 
 		// for some reason, restitution is reset unless it's set after body creation
 		bumper.restitution = BUMPER_BOUNCE;
@@ -463,9 +463,120 @@
 		return bumper;
 	}
 
+	// round bodies that repel pinball
+
+	//McConnell Bumper
+	function bumper1(x, y,) {
+		let bumper01 = Matter.Bodies.circle(x, y, 25, {
+			label: 'bumper',
+			isStatic: true,
+			render: {
+				fillStyle: COLOR.BUMPER,
+				sprite:{
+					xScale: .18,
+					yScale: .16,
+					texture: '../McConnell_head.png'
+				}
+
+			}
+		});
+
+		// for some reason, restitution is reset unless it's set after body creation
+		bumper01.restitution = BUMPER_BOUNCE;
+
+		return bumper01;
+	}
+	// Pence Bumper
+	function bumper2(x, y,) {
+		let bumper02 = Matter.Bodies.circle(x, y, 25, {
+			label: 'bumper',
+			isStatic: true,
+			render: {
+				fillStyle: COLOR.BUMPER,
+				sprite:{
+					xScale: .12,
+					yScale: .12,
+					texture: '../Pence_head.png'
+				}
+
+			}
+		});
+
+		// for some reason, restitution is reset unless it's set after body creation
+		bumper02.restitution = BUMPER_BOUNCE;
+
+		return bumper02;
+	}
+
+	// Barr Bumper
+	function bumper3(x, y,) {
+		let bumper03 = Matter.Bodies.circle(x, y, 25, {
+			label: 'bumper',
+			isStatic: true,
+			render: {
+				fillStyle: COLOR.BUMPER,
+				sprite:{
+					xScale: .22,
+					yScale: .2,
+					texture: '../Barr_head.png'
+				}
+
+			}
+		});
+
+		// for some reason, restitution is reset unless it's set after body creation
+		bumper03.restitution = BUMPER_BOUNCE;
+
+		return bumper03;
+	}
+
+	// Collins Bumper
+	function bumper4(x, y,) {
+		let bumper04 = Matter.Bodies.circle(x, y, 25, {
+			label: 'bumper',
+			isStatic: true,
+			render: {
+				fillStyle: COLOR.BUMPER,
+				sprite:{
+					xScale: .15,
+					yScale: .14,
+					texture: '../Collings_head.png'
+				}
+
+			}
+		});
+
+		// for some reason, restitution is reset unless it's set after body creation
+		bumper04.restitution = BUMPER_BOUNCE;
+
+		return bumper04;
+	}
+
+	// R. Paul Bumper
+	function bumper5(x, y,) {
+		let bumper05 = Matter.Bodies.circle(x, y, 25, {
+			label: 'bumper',
+			isStatic: true,
+			render: {
+				fillStyle: COLOR.BUMPER,
+				sprite:{
+					xScale: .24,
+					yScale: .21,
+					texture: '../RandPaul_mid_head.png'
+				}
+
+			}
+		});
+
+		// for some reason, restitution is reset unless it's set after body creation
+		bumper05.restitution = BUMPER_BOUNCE;
+
+		return bumper05;
+	}
+
 	function sideBumper(x, y, path) {
 		let bumperVertices = Matter.Vertices.fromPath(path);
-		let bumper2 = Matter.Bodies.fromVertices(x, y, bumperVertices, {
+		let bumperSide = Matter.Bodies.fromVertices(x, y, bumperVertices, {
 			label: 'sideBumper',
 			isStatic: true,
 			render: {
@@ -473,9 +584,9 @@
 			}
 		});
 
-		bumper2.restitution = BUMPER_BOUNCE;
+		bumperSide.restitution = BUMPER_BOUNCE;
 
-		return bumper2;
+		return bumperSide;
 	}
 
 	// invisible bodies to constrict paddles
