@@ -12,15 +12,15 @@
 	};
 
 	const COLOR = {
-		BACKGROUND: '../Baby_Trump_BG.png',
+		BACKGROUND: '../Baby_Trump_BG_3.png',
 		OUTER: '#963524',
-		INNER: '#525ad1',
+		INNER: '#963524',
 		BUMPER: '#fab005',
 		BUMPER_LIT: '#fff3bf',
 		PADDLE: '#bcbcbc',
 		PINBALL: '#dee2e6'
 	};
-	const GRAVITY = 0.75;
+	const GRAVITY = 0.8;
 	const WIREFRAMES = false;
 	const BUMPER_BOUNCE = 1.5;
 	const PADDLE_PULL = 0.002;
@@ -259,9 +259,9 @@
 			render: {
 				fillStyle: COLOR.PINBALL,
 				sprite: {
-					xScale:0.4,
-					yScale: 0.4,
-					texture: '../dt2_pinball.png'
+					xScale:0.08,
+					yScale: 0.08,
+					texture: '../republican_pinball.png'
 				}
 			}
 		});
@@ -380,9 +380,11 @@
 		updateScore(currentScore + 10);
 
 		// flash color
-		bumper.render.fillStyle = COLOR.BUMPER_LIT;
+		bumper.render.sprite.xScale = .24;
+		bumper.render.sprite.yScale = .26;
 		setTimeout(function() {
-			bumper.render.fillStyle = COLOR.BUMPER;
+			bumper.render.sprite.xScale = .2;
+			bumper.render.sprite.yScale = .22;
 		}, 100);
 	}
 
@@ -446,24 +448,7 @@
 		});
 	}
 
-	// round bodies that repel pinball
-	function bumper(x, y,) {
-		let bumper = Matter.Bodies.circle(x, y, 25, {
-			label: 'bumper',
-			isStatic: true,
-			render: {
-				fillStyle: COLOR.BUMPER,
-
-			}
-		});
-
-		// for some reason, restitution is reset unless it's set after body creation
-		bumper.restitution = BUMPER_BOUNCE;
-
-		return bumper;
-	}
-
-	// round bodies that repel pinball
+	//Bodies that repel pinball
 
 	//McConnell Bumper
 	function bumper1(x, y,) {
@@ -473,9 +458,9 @@
 			render: {
 				fillStyle: COLOR.BUMPER,
 				sprite:{
-					xScale: .18,
-					yScale: .16,
-					texture: '../McConnell_head.png'
+					xScale: .22,
+					yScale: .22,
+					texture: '../McConnell_head_fixed_2.png'
 				}
 
 			}
@@ -494,9 +479,9 @@
 			render: {
 				fillStyle: COLOR.BUMPER,
 				sprite:{
-					xScale: .12,
-					yScale: .12,
-					texture: '../Pence_head.png'
+					xScale: .2,
+					yScale: .22,
+					texture: '../Pence_head_fixed_2.png'
 				}
 
 			}
@@ -516,9 +501,9 @@
 			render: {
 				fillStyle: COLOR.BUMPER,
 				sprite:{
-					xScale: .22,
-					yScale: .2,
-					texture: '../Barr_head.png'
+					xScale: .2,
+					yScale: .22,
+					texture: '../Barr_head_2.png'
 				}
 
 			}
@@ -538,9 +523,9 @@
 			render: {
 				fillStyle: COLOR.BUMPER,
 				sprite:{
-					xScale: .15,
-					yScale: .14,
-					texture: '../Collings_head.png'
+					xScale: .2,
+					yScale: .22,
+					texture: '../Collings_mid_head_fixed.png'
 				}
 
 			}
@@ -560,9 +545,9 @@
 			render: {
 				fillStyle: COLOR.BUMPER,
 				sprite:{
-					xScale: .24,
-					yScale: .21,
-					texture: '../RandPaul_mid_head.png'
+					xScale: .2,
+					yScale: .22,
+					texture: '../Gaetz_head_3.png'
 				}
 
 			}
@@ -635,7 +620,7 @@
 	}
 
 	function resetTop(x, width) {
-		return Matter.Bodies.rectangle(x, 5, width, 20, {
+		return Matter.Bodies.rectangle(x, 5, width, 8, {
 			label: 'resetTop',
 			isStatic: true,
 			render: {
