@@ -57,11 +57,11 @@ body {
 	bottom: 10px;
   border: 0;
 	border-radius: 50%;
-  color: inherit;
-	background-color: #e64980;
+  color: #963524;
+	background-color: #dee2e6;
 	text-align: center;
 	line-height: 80px;
-	font-size: 1.25rem;
+	font-size: 1.75rem;
   text-transform: inherit;
 	cursor: pointer;
 	-webkit-user-select: none;
