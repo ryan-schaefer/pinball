@@ -4,8 +4,18 @@
 
 	// constants
 	const AUDIO = {
+		BANG01: new Audio('../bang01.mp3'),
 		BING01: new Audio('../bing01.mp3'),
-		BONG01: new Audio('../bong01.mp3')
+		BING02: new Audio('../bing02.mp3'),
+		BING03: new Audio('../bing03.mp3'),
+		BONG01: new Audio('../bong01.mp3'),
+		BING_TOILET: new Audio('../bing_toilet.mp3'),
+		KIDNAP_BABY: new Audio('kidnap_baby.mp3'),
+		HAVE_CHINA: new Audio('have_china.mp3'),
+		ASIAN_BABY: new Audio('asian_baby.mp3'),
+		POLITICAL_CORRECTNESS: new Audio('political_correctness.mp3'),
+		PUPPETS: new Audio('puppets.mp3'),
+		WOMAN_BABY: new Audio('woman_baby.mp3')
 	}
 
 	const PATHS = {
@@ -291,6 +301,7 @@
 					switch (pair.bodyA.label) {
 						case 'reset':
 							launchPinball();
+							resetPing();
 							break;
 						case 'resetTop':
 							launchPinballKeepScore();
@@ -392,7 +403,7 @@
 	function pingBumper(bumper) {
 		updateScore(currentScore + 10);
 
-		// flash color
+		// expands & retracts bumper heads
 		bumper.render.sprite.xScale = .24;
 		bumper.render.sprite.yScale = .26;
 		bumper.audio.play();
@@ -401,20 +412,20 @@
 			bumper.render.sprite.yScale = .22;
 		}, 100);
 		bumperCount--;
-		if (bumperCount === 0) {
-			bumperCount = initialBumperCount;
 			//play audio file here
-/*			let audio = [audiofile1, audiofile2, ... ]
-				[Math.floor(Math.random() * 10)];
-				audio.play()
-				*/
-		}
-	}
+		let random = (Math.floor(Math.random() * 10) + 1);
+			if (random >= 8) {AUDIO.KIDNAP_BABY.play();}
+			else if (random >= 6) {AUDIO.HAVE_CHINA.play();}
+			else if (random >= 4) {AUDIO.ASIAN_BABY.play();}
+			else if (random >= 2) {AUDIO.POLITICAL_CORRECTNESS.play();}
+			else {AUDIO.PUPPETS.play();}
+			}
 
 	function pingSideBumper(sideBumper) {
 		updateScore(currentScore + 5);
 		// flash color
 		sideBumper.render.fillStyle = COLOR.BUMPER_LIT;
+		sideBumper.audio.play();
 		setTimeout(function() {
 			sideBumper.render.fillStyle = COLOR.BUMPER;
 		}, 100);
@@ -486,7 +497,7 @@
 				}
 
 			},
-			audio:AUDIO.BING01
+			audio:AUDIO.BING02
 		});
 
 		// for some reason, restitution is reset unless it's set after body creation
@@ -508,7 +519,7 @@
 				}
 
 			},
-			audio:AUDIO.BONG01
+			audio:AUDIO.BING01
 		});
 
 		// for some reason, restitution is reset unless it's set after body creation
@@ -531,7 +542,7 @@
 				}
 
 			},
-			audio:AUDIO.BING01
+			audio:AUDIO.BONG01
 		});
 
 		// for some reason, restitution is reset unless it's set after body creation
@@ -554,7 +565,7 @@
 				}
 
 			},
-			audio:AUDIO.BING01
+			audio:AUDIO.BING03
 
 		});
 
@@ -578,7 +589,7 @@
 				}
 
 			},
-			audio:AUDIO.BING01
+			audio:AUDIO.BANG01
 		});
 
 		// for some reason, restitution is reset unless it's set after body creation
@@ -594,7 +605,9 @@
 			isStatic: true,
 			render: {
 				fillStyle: COLOR.BUMPER
-			}
+			},
+			audio:AUDIO.WOMAN_BABY
+
 		});
 
 		bumperSide.restitution = BUMPER_BOUNCE;
@@ -635,6 +648,11 @@
 			}
 		});
 	}
+	// plays audio when ball is reset
+	function resetPing(reset) {
+		reset = AUDIO.BING_TOILET;
+		return	reset.play();
+	}
 
 	// contact with these bodies causes pinball to be relaunched
 	function reset(x, width) {
@@ -643,7 +661,7 @@
 			isStatic: true,
 			render: {
 				fillStyle: '#fff'
-			}
+			},
 		});
 	}
 
