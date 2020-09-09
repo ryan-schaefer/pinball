@@ -10,12 +10,19 @@
 		BING03: new Audio('../bing03.mp3'),
 		BONG01: new Audio('../bong01.mp3'),
 		BING_TOILET: new Audio('../bing_toilet.mp3'),
-		KIDNAP_BABY: new Audio('kidnap_baby.mp3'),
-		HAVE_CHINA: new Audio('have_china.mp3'),
-		ASIAN_BABY: new Audio('asian_baby.mp3'),
-		POLITICAL_CORRECTNESS: new Audio('political_correctness.mp3'),
-		PUPPETS: new Audio('puppets.mp3'),
-		WOMAN_BABY: new Audio('woman_baby.mp3')
+		KIDNAP_BABY: new Audio('../kidnap_baby.mp3'),
+		HAVE_CHINA: new Audio('../have_china.mp3'),
+		ASIAN_BABY: new Audio('../asian_baby.mp3'),
+		POLITICAL_CORRECTNESS: new Audio('../political_correctness.mp3'),
+		PUPPETS: new Audio('../puppets.mp3'),
+		WOMAN_BABY: new Audio('../woman_baby.mp3'),
+		BING_END: new Audio('../bing_end.mp3'),
+		BING_ROCKET: new Audio('../bing_rocketship.mp3'),
+		BING_TACKLE: new Audio('../bing_tackle.mp3'),
+		CHINA: new Audio('../CHINA.mp3'),
+		AXIOS_LAST: new Audio('../axios_last_first.mp3'),
+		YOSEMITE: new Audio('../yosemite.mp3'),
+		SIR: new Audio('../sir.mp3')
 	}
 
 	const PATHS = {
@@ -407,25 +414,32 @@
 		bumper.render.sprite.xScale = .24;
 		bumper.render.sprite.yScale = .26;
 		bumper.audio.play();
-		setTimeout(function() {
+		setTimeout(function () {
 			bumper.render.sprite.xScale = .2;
 			bumper.render.sprite.yScale = .22;
 		}, 100);
 		bumperCount--;
-			//play audio file here
-		let random = (Math.floor(Math.random() * 10) + 1);
-			if (random >= 8) {AUDIO.KIDNAP_BABY.play();}
-			else if (random >= 6) {AUDIO.HAVE_CHINA.play();}
-			else if (random >= 4) {AUDIO.ASIAN_BABY.play();}
-			else if (random >= 2) {AUDIO.POLITICAL_CORRECTNESS.play();}
-			else {AUDIO.PUPPETS.play();}
-			}
+
+	}
 
 	function pingSideBumper(sideBumper) {
 		updateScore(currentScore + 5);
 		// flash color
 		sideBumper.render.fillStyle = COLOR.BUMPER_LIT;
-		sideBumper.audio.play();
+		if (initialBumperCount >= 3) {
+			let random = (Math.floor(Math.random() * 10) + 1);
+			if (random >= 8) {
+				AUDIO.KIDNAP_BABY.play();
+			} else if (random >= 6) {
+				AUDIO.CHINA.play();
+			} else if (random >= 4) {
+				AUDIO.SIR.play();
+			} else if (random >= 2) {
+				AUDIO.BING_TACKLE.play();
+			} else {
+				AUDIO.PUPPETS.play();
+			}
+		}
 		setTimeout(function() {
 			sideBumper.render.fillStyle = COLOR.BUMPER;
 		}, 100);
@@ -606,8 +620,6 @@
 			render: {
 				fillStyle: COLOR.BUMPER
 			},
-			audio:AUDIO.WOMAN_BABY
-
 		});
 
 		bumperSide.restitution = BUMPER_BOUNCE;
@@ -650,9 +662,20 @@
 	}
 	// plays audio when ball is reset
 	function resetPing(reset) {
-		reset = AUDIO.BING_TOILET;
-		return	reset.play();
-	}
+		reset = (Math.floor(Math.random() * 10) + 1);
+			if (reset >= 8) {
+				AUDIO.BING_TOILET.play();
+			} else if (reset >= 6) {
+				AUDIO.AXIOS_LAST.play();
+			} else if (reset >= 4) {
+				AUDIO.BING_END.play();
+			} else if (reset >= 2) {
+				AUDIO.BING_ROCKET.play();
+			} else {
+				AUDIO.POLITICAL_CORRECTNESS.play();
+			}
+		}
+
 
 	// contact with these bodies causes pinball to be relaunched
 	function reset(x, width) {
