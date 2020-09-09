@@ -3,6 +3,11 @@
 	Matter.use(MatterAttractors);
 
 	// constants
+	const AUDIO = {
+		BING01: new Audio('../bing01.mp3'),
+		BONG01: new Audio('../bong01.mp3')
+	}
+
 	const PATHS = {
 		DOME: '0 0 0 250 19 250 20 231.9 25.7 196.1 36.9 161.7 53.3 129.5 74.6 100.2 100.2 74.6 129.5 53.3 161.7 36.9 196.1 25.7 231.9 20 268.1 20 303.9 25.7 338.3 36.9 370.5 53.3 399.8 74.6 425.4 100.2 446.7 129.5 463.1 161.7 474.3 196.1 480 231.9 480 250 500 250 500 0 0 0',
 		DROP_LEFT: '0 0 20 0 70 100 20 150 0 150 0 0',
@@ -25,6 +30,14 @@
 	const BUMPER_BOUNCE = 1.5;
 	const PADDLE_PULL = 0.002;
 	const MAX_VELOCITY = 50;
+	const initialBumperCount = 3;
+
+	//regulates bumper audio
+	let bumperCount = initialBumperCount;
+	const bumperTimer = setInterval(() => {
+		bumperCount = bumperCount < initialBumperCount ? bumperCount + 1 : bumperCount;
+	}, 333);
+
 
 	// score elements
 	let $currentScore = $('.current-score span');
@@ -382,15 +395,24 @@
 		// flash color
 		bumper.render.sprite.xScale = .24;
 		bumper.render.sprite.yScale = .26;
+		bumper.audio.play();
 		setTimeout(function() {
 			bumper.render.sprite.xScale = .2;
 			bumper.render.sprite.yScale = .22;
 		}, 100);
+		bumperCount--;
+		if (bumperCount === 0) {
+			bumperCount = initialBumperCount;
+			//play audio file here
+/*			let audio = [audiofile1, audiofile2, ... ]
+				[Math.floor(Math.random() * 10)];
+				audio.play()
+				*/
+		}
 	}
 
 	function pingSideBumper(sideBumper) {
 		updateScore(currentScore + 5);
-
 		// flash color
 		sideBumper.render.fillStyle = COLOR.BUMPER_LIT;
 		setTimeout(function() {
@@ -463,7 +485,8 @@
 					texture: '../McConnell_head_fixed_2.png'
 				}
 
-			}
+			},
+			audio:AUDIO.BING01
 		});
 
 		// for some reason, restitution is reset unless it's set after body creation
@@ -484,7 +507,8 @@
 					texture: '../Pence_head_fixed_2.png'
 				}
 
-			}
+			},
+			audio:AUDIO.BONG01
 		});
 
 		// for some reason, restitution is reset unless it's set after body creation
@@ -506,7 +530,8 @@
 					texture: '../Barr_head_2.png'
 				}
 
-			}
+			},
+			audio:AUDIO.BING01
 		});
 
 		// for some reason, restitution is reset unless it's set after body creation
@@ -528,7 +553,9 @@
 					texture: '../Collings_mid_head_fixed.png'
 				}
 
-			}
+			},
+			audio:AUDIO.BING01
+
 		});
 
 		// for some reason, restitution is reset unless it's set after body creation
@@ -537,7 +564,7 @@
 		return bumper04;
 	}
 
-	// R. Paul Bumper
+	// Gaetz Bumper
 	function bumper5(x, y,) {
 		let bumper05 = Matter.Bodies.circle(x, y, 25, {
 			label: 'bumper',
@@ -550,7 +577,8 @@
 					texture: '../Gaetz_head_3.png'
 				}
 
-			}
+			},
+			audio:AUDIO.BING01
 		});
 
 		// for some reason, restitution is reset unless it's set after body creation
