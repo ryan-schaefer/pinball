@@ -12,6 +12,7 @@
 		BING_TOILET: new Audio('../bing_toilet.mp3'),
 		KIDNAP_BABY: new Audio('../kidnap_baby.mp3'),
 		HAVE_CHINA: new Audio('../have_china.mp3'),
+		CHINA_LEARN: new Audio('../china_learn_china.mp3'),
 		ASIAN_BABY: new Audio('../asian_baby.mp3'),
 		POLITICAL_CORRECTNESS: new Audio('../political_correctness.mp3'),
 		PUPPETS: new Audio('../puppets.mp3'),
@@ -22,7 +23,9 @@
 		CHINA: new Audio('../CHINA.mp3'),
 		AXIOS_LAST: new Audio('../axios_last_first.mp3'),
 		YOSEMITE: new Audio('../yosemite.mp3'),
-		SIR: new Audio('../sir.mp3')
+		SIR: new Audio('../sir.mp3'),
+		PWMCT: new Audio('../PWMCT.mp3'),
+		PUTIN: new Audio('../putin.mp3')
 	}
 
 	const PATHS = {
@@ -424,20 +427,28 @@
 
 	function pingSideBumper(sideBumper) {
 		updateScore(currentScore + 5);
-		// flash color
+		// flash color & randomizes sfx
 		sideBumper.render.fillStyle = COLOR.BUMPER_LIT;
 		if (initialBumperCount >= 3) {
 			let random = (Math.floor(Math.random() * 10) + 1);
-			if (random >= 8) {
+			if (random >= 9) {
 				AUDIO.KIDNAP_BABY.play();
-			} else if (random >= 6) {
+			} else if (random >= 8) {
 				AUDIO.CHINA.play();
-			} else if (random >= 4) {
+			} else if (random >= 7) {
 				AUDIO.SIR.play();
-			} else if (random >= 2) {
+			} else if (random >= 6) {
 				AUDIO.BING_TACKLE.play();
-			} else {
+			} else if (random >= 5) {
+				AUDIO.WOMAN_BABY.play();
+			}else if (random >= 4) {
+				AUDIO.CHINA_LEARN.play();
+			}else if (random >= 3) {
+				AUDIO.PUTIN.play();
+			}else if (random >= 2) {
 				AUDIO.PUPPETS.play();
+			}else {
+				AUDIO.POLITICAL_CORRECTNESS.play();
 			}
 		}
 		setTimeout(function() {
@@ -672,7 +683,7 @@
 			} else if (reset >= 2) {
 				AUDIO.BING_ROCKET.play();
 			} else {
-				AUDIO.POLITICAL_CORRECTNESS.play();
+				AUDIO.PWMCT.play();
 			}
 		}
 
