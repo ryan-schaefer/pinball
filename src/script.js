@@ -355,7 +355,7 @@
 
             // cheap way to keep ball from going back down the shooter lane
             if (pinball.position.x > 700 && pinball.velocity.y > 0) {
-                Matter.Body.setVelocity(pinball, {x: 0, y: -10});
+                Matter.Body.setVelocity(pinball, {x: 15, y: -5});
             }
         });
 
