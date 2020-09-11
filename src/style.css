@@ -5,14 +5,17 @@
 }
 
 html, body {
-	height: 110%;
+	height: 100%;
 	overflow: hidden;
 }
 
 body {
+	display: -webkit-box;
 	display: flex;
-	justify-content: center;
-	align-items: center;
+	-webkit-box-pack: center;
+	        justify-content: center;
+	-webkit-box-align: center;
+	        align-items: center;
 	margin: 0;
 	color: #dee2e6;
 	background-color: #212529;
@@ -45,21 +48,26 @@ body {
 }
 
 .trigger {
-  appearance: none;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
 	position: absolute;
 	width: 80px;
 	height: 80px;
 	bottom: 10px;
   border: 0;
 	border-radius: 50%;
-  color: inherit;
-	background-color: #e64980;
+  color: #963524;
+	background-color: #dee2e6;
 	text-align: center;
 	line-height: 80px;
-	font-size: 1.25rem;
+	font-size: 1.75rem;
   text-transform: inherit;
 	cursor: pointer;
-	user-select: none;
+	-webkit-user-select: none;
+	   -moz-user-select: none;
+	    -ms-user-select: none;
+	        user-select: none;
   outline: none;
 }
 
@@ -68,7 +76,7 @@ body {
 }
 
 .right-trigger {
-	right: 60px;
+	right: 10px;
 }
 
 canvas {
@@ -79,14 +87,14 @@ canvas {
 
 /* responsive scaling, because pinball tables are tall */
 @media (min-height: 0px) {
-	.container { transform: scale(0.25); }
+	.container { -webkit-transform: scale(0.25); transform: scale(0.25); }
 }
 @media (min-height: 400px) {
-	.container { transform: scale(0.5); }
+	.container { -webkit-transform: scale(0.5); transform: scale(0.5); }
 }
 @media (min-height: 600px) {
-	.container { transform: scale(0.75); }
+	.container { -webkit-transform: scale(0.75); transform: scale(0.75); }
 }
 @media (min-height: 800px) {
-	.container { transform: scale(1); }
+	.container { -webkit-transform: scale(1); transform: scale(1); }
 }
